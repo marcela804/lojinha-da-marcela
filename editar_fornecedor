@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!-- Documento HTML5 -->
+
+<head>
+    <!-- Cabeçalho -->
+
+    <meta charset="UTF-8">
+    <!-- Suporte a acentos -->
+
+    <title>Editar Fornecedor</title>
+    <!-- Título da aba -->
+
+    <style>
+        /* Estilos das mensagens flash */
+
+        .flash {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .flash.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .flash.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Corpo da página -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{category}}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <!-- Mostra mensagens flash -->
+
+    {% if not fornecedor %}
+    <!--
+        CORREÇÃO IMPORTANTE:
+        aqui o certo é testar "fornecedor" e não "cliente"
+    -->
+
+        <p style="color: red; font-weight: bold;">
+            Fornecedor não encontrado. <a href="/fornecedor">← Voltar à lista</a>
+        </p>
+
+    {% else %}
+
+        <h1>Editar Fornecedor</h1>
+
+        <form action="/atualizar_fornecedor/{{fornecedor[0]}}" method="POST">
+        <!--
+            fornecedor[0] = id do fornecedor
+            envia para a rota que atualiza os dados
+        -->
+
+            <input type="hidden" name="endereco_id" value="{{fornecedor[5]}}">
+            <!-- Guarda o id do endereço do fornecedor -->
+
+            Nome:<br>
+            <input type="text" name="nome" value="{{fornecedor[1]}}"><br><br>
+            <!-- Campo nome -->
+
+            CNPJ:<br>
+            <input type="text" name="cnpj" value="{{fornecedor[2]}}"><br><br>
+            <!-- Campo cnpj -->
+
+            Quantidade:<br>
+            <input type="number" name="quantidade" value="{{fornecedor[3]}}"><br><br>
+            <!-- Campo quantidade -->
+
+            Preço:<br>
+            <input type="number" step="0.01" name="preco" value="{{fornecedor[4]}}"><br><br>
+            <!-- Campo preço -->
+
+            <h3>Endereço</h3>
+            <!-- Subtítulo -->
+
+            Rua:<br>
+            <input type="text" name="rua" value="{{fornecedor[6]}}"><br><br>
+            <!-- Campo rua -->
+
+            Número:<br>
+            <input type="text" name="numero" value="{{fornecedor[7]}}"><br><br>
+            <!-- Campo número -->
+
+            Cidade:<br>
+            <input type="text" name="cidade" value="{{fornecedor[8]}}"><br><br>
+            <!-- Campo cidade -->
+
+            <button type="submit">Atualizar</button>
+            <!-- Botão de salvar -->
+
+        </form>
+
+    {% endif %}
+
+    <br>
+
+    <a href="/fornecedor" style="color: rgb(191, 0, 255); text-decoration: none;">
+        ← Voltar à lista de fornecedores
+    </a>
+    <!--
+        CORREÇÃO IMPORTANTE:
+        o texto antes dizia "clientes"
+        agora está correto para "fornecedores"
+    -->
+
+</body>
+</html>
