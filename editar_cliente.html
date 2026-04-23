@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Cliente</title>
+    <style>
+        .flash { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .flash.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .flash.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        input { width: 300px; padding: 8px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; }
+        label { font-weight: bold; }
+        button { padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #218838; }
+    </style>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{category}}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if not cliente %}
+        <p style="color: red; font-weight: bold;">Cliente não encontrado. <a href="/cliente">← Voltar à lista</a></p>
+    {% else %}
+        <h1>Editar Cliente ID {{cliente[0]}}</h1>
+
+        <form action="/atualizar_cliente/{{cliente[0]}}" method="POST">
+            <input type="hidden" name="endereco_id" value="{{cliente[3]}}">
+            
+            <label>Nome:</label><br>
+            <input type="text" name="nome" value="{{cliente[1]}}" required><br>
+
+            <label>CPF:</label><br>
+            <input type="text" name="cpf" value="{{cliente[2]}}" required><br>
+
+            <label>Rua:</label><br>
+            <input type="text" name="rua" value="{{cliente[4]}}" required><br>
+
+            <label>Número:</label><br>
+            <input type="text" name="numero" value="{{cliente[5]}}" required style="width: 100px;"><br>
+
+            <label>Cidade:</label><br>
+            <input type="text" name="cidade" value="{{cliente[6]}}" required><br>
+
+            <button type="submit">Atualizar Cliente</button>
+        </form>
+    {% endif %}
+
+    <br>
+    <a href="/cliente" style="color: blue; text-decoration: none;">← Voltar à lista de clientes</a>
+
+</body>
+</html>
