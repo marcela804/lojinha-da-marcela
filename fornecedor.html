@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!-- Documento HTML5 -->
+ 
+<head>
+    <!-- Cabeçalho -->
+
+    <meta charset="UTF-8">
+    <!-- Aceita acentos -->
+
+    <title>Lista de Fornecedores</title>
+    <!-- Título da aba -->
+</head>
+
+<body>
+    <!-- Corpo da página -->
+
+    <h1>Lista de Fornecedores</h1>
+    <!-- Título principal -->
+
+    <table border="1">
+    <!-- Tabela com borda -->
+
+        <tr>
+            <!-- Cabeçalho -->
+            <th>Nome</th>
+            <th>CNPJ</th>
+            <th>Quantidade</th>
+            <th>Preço</th>
+            <th>Endereço</th>
+            <th>Ações</th>
+        </tr>
+
+        {% for f in fornecedor %}
+        <!-- Loop que percorre todos os fornecedores -->
+
+        <tr>
+            <td>{{f[1]}}</td>
+            <!-- nome -->
+
+            <td>{{f[2]}}</td>
+            <!-- cnpj -->
+
+            <td>{{f[3]}}</td>
+            <!-- quantidade -->
+
+            <td>R$ {{f[4]}}</td>
+            <!-- preço -->
+
+            <td>{{f[6]}}, Nº {{f[7]}} - {{f[8]}}</td>
+            <!-- endereço formatado -->
+
+            <td>
+                <a href="/editar_fornecedor/{{f[0]}}">✏️ Editar</a> |
+                <!-- Link para editar -->
+
+                <a href="/deletar_fornecedor/{{f[0]}}">🗑️ Deletar</a>
+                <!-- Link para deletar -->
+            </td>
+        </tr>
+
+        {% endfor %}
+        <!-- Fim do loop -->
+
+    </table>
+
+    {% if not fornecedor %}
+    <!-- Se a lista estiver vazia -->
+
+        <p style="color: #721c24; font-weight: bold; font-size: 1.1em; padding: 15px; background: #f8d7da; border-radius: 8px; border-left: 5px solid #dc3545; margin: 20px 0;">
+            Nenhum fornecedor cadastrado. Cadastrar primeiro
+        </p>
+
+    {% endif %}
+
+    <br>
+
+    <a href="/">⬅ Voltar</a>
+    <!-- Link de voltar -->
+
+</body>
+</html>
