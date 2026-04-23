@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Clientes</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            background: #f5f5f5;
+        }
+        h1 { 
+            color: #333; 
+            text-align: center; 
+        }
+        table { 
+            border-collapse: collapse; 
+            width: 100%; 
+            margin: 20px 0; 
+        }
+        th, td { 
+            border: 1px solid #ddd; 
+            padding: 12px; 
+            text-align: left; 
+        }
+        th { 
+            background-color: #4CAF50; 
+            color: white; 
+        }
+        tr:nth-child(even) { 
+            background-color: #f2f2f2; 
+        }
+        .actions a { 
+            margin-right: 10px; 
+            text-decoration: none; 
+            padding: 6px 12px; 
+            border-radius: 4px; 
+            color: white; 
+        }
+        .edit { 
+            background: #2196F3; 
+        }
+        .delete { 
+            background: #f44336; 
+        }
+        .empty { 
+            color: #666; 
+            font-style: italic; 
+            text-align: center; 
+            margin: 40px 0; 
+            font-size: 1.2em; 
+            background: #fff3cd; 
+            padding: 20px; 
+            border-radius: 8px; 
+        }
+        .back { 
+            display: block; 
+            text-align: center; 
+            margin-top: 20px; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Clientes</h1>
+
+    {% if cliente %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Endereço</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in cliente %}
+                <tr>
+                    <td>{{ c[0] }}</td>
+                    <td>{{ c[1] }}</td>
+                    <td>{{ c[2] }}</td>
+                    <td>{{ c[4] }}, Nº {{ c[5] }} - {{ c[6] }}</td>
+                    <td class="actions">
+                        <a href="{{ url_for('cliente.editar_cliente', id=c[0]) }}" class="edit">✏️ Editar</a>
+                        <a href="{{ url_for('cliente.deletar_cliente', id=c[0]) }}" class="delete" onclick="return confirm('Confirmar exclusão do cliente e endereço?')">🗑️ Deletar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="empty">
+            Nenhum cliente cadastrado. 
+            <a href="{{ url_for('cliente.form_cliente') }}" style="color: #bc7fd4; text-decoration: none; font-weight: bold;">Cadastrar primeiro</a>
+        </div>
+    {% endif %}
+
+    <a href="/" class="back" style="color: #bc7fd4; text-decoration: none; font-weight: bold; font-size: 1.1em;">⬅ Voltar ao Menu Principal</a>
+</body>
+</html>
