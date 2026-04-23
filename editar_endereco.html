@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Endereço</title>
+    <style>
+        .flash { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .flash.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .flash.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        input { width: 300px; padding: 5px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{category}}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if not endereco %}
+        <p style="color: red; font-weight: bold;">Endereço não encontrado. <a href="/endereco">← Voltar à lista</a></p>
+    {% else %}
+        <h1>Editar Endereço ID {{endereco[0]}}</h1>
+
+        <form action="/atualizar_endereco/{{endereco[0]}}" method="POST">
+            <label>Rua:</label><br>
+            <input type="text" name="rua" value="{{endereco[1]}}" required><br><br>
+
+            <label>Número:</label><br>
+            <input type="text" name="numero" value="{{endereco[2]}}" required style="width: 100px;"><br><br>
+
+            <label>Cidade:</label><br>
+            <input type="text" name="cidade" value="{{endereco[3]}}" required><br><br>
+
+            <label>CEP:</label><br>
+            <input type="text" name="cep" value="{{endereco[4] if endereco[4] else '' }}" placeholder="12345-678" maxlength="10"><br><br>
+
+            <button type="submit">Atualizar Endereço</button>
+        </form>
+    {% endif %}
+
+    <br>
+    <a href="/endereco" style="color: blue; text-decoration: none;">← Voltar à lista de endereços</a>
+
+</body>
+</html>
