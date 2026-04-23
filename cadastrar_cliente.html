@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!-- Define que este arquivo é um documento HTML5 -->
+
+<head>
+    <!-- Cabeçalho da página: configurações invisíveis para o usuário -->
+
+    <meta charset="UTF-8">
+    <!-- Define a codificação de caracteres para aceitar acentos corretamente -->
+
+    <title>Cadastrar Cliente</title>
+    <!-- Título que aparece na aba do navegador -->
+
+    <style>
+        /* CSS interno da página = aparência visual */
+
+        .flash {
+            /* Estilo base das mensagens flash */
+            padding: 10px;         /* Espaço interno */
+            margin: 10px 0;        /* Espaço externo em cima e embaixo */
+            border-radius: 5px;    /* Arredonda os cantos */
+        }
+
+        .flash.success {
+            /* Cor da mensagem de sucesso */
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .flash.error {
+            /* Cor da mensagem de erro */
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Corpo da página = tudo que aparece visualmente -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    <!-- 
+        Jinja2: cria uma variável temporária chamada "messages"
+        get_flashed_messages() pega as mensagens enviadas pelo Flask com flash()
+        with_categories=true faz vir assim:
+        ("success", "Cliente cadastrado!")
+        ("error", "Erro ao cadastrar cliente")
+    -->
+
+        {% if messages %}
+        <!-- Se existir pelo menos uma mensagem flash -->
+
+            {% for category, message in messages %}
+            <!-- Percorre cada mensagem recebida -->
+
+                <div class="flash {{category}}">
+                    {{ message }}
+                </div>
+                <!--
+                    Cria uma div para mostrar a mensagem na tela
+                    {{category}} pode virar "success" ou "error"
+                    {{message}} mostra o texto da mensagem
+                -->
+
+            {% endfor %}
+            <!-- Fim do loop de mensagens -->
+
+        {% endif %}
+        <!-- Fim da verificação se existem mensagens -->
+
+    {% endwith %}
+    <!-- Fim do bloco temporário "messages" -->
+
+    <h1>Cadastrar Cliente</h1>
+    <!-- Título principal da página -->
+
+    <form action="/cadastrar_cliente" method="POST">
+    <!-- 
+        form = formulário HTML
+        action="/cadastrar_cliente" = ao clicar em salvar, envia para essa rota do Flask
+        method="POST" = os dados serão enviados de forma segura pelo corpo da requisição
+    -->
+
+        Nome:<br>
+        <!-- Texto do campo Nome -->
+        <input type="text" name="nome" required><br><br>
+        <!--
+            type="text" = campo de texto
+            name="nome" = nome da chave que o Flask recebe no request.form
+            required = obriga o usuário a preencher
+        -->
+
+        CPF:<br>
+        <!-- Texto do campo CPF -->
+        <input type="text" name="cpf" required><br><br>
+        <!-- Campo CPF -->
+
+        Rua:<br>
+        <!-- Texto do campo Rua -->
+        <input type="text" name="rua" required><br><br>
+        <!-- Campo Rua -->
+
+        Número:<br>
+        <!-- Texto do campo Número -->
+        <input type="text" name="numero" required><br><br>
+        <!-- Campo Número -->
+
+        Cidade:<br>
+        <!-- Texto do campo Cidade -->
+        <input type="text" name="cidade" required><br><br>
+        <!-- Campo Cidade -->
+
+        <button type="submit">Salvar</button>
+        <!--
+            Botão que envia o formulário
+            type="submit" = manda os dados para o Flask
+        -->
+
+    </form>
+    <!-- Fim do formulário -->
+
+    <br>
+    <!-- Quebra de linha visual -->
+
+    <a href="/">⬅ Voltar</a>
+    <!-- Link para voltar à página inicial -->
+
+</body>
+</html>
